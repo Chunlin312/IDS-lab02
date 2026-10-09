@@ -85,6 +85,18 @@ plastic_data_all <- data4 %>%
 
 ```{r Ex1, message = FALSE}
 # Write your code here to answer exercise 1
+region_frequency <- plastic_data_all %>%
+  count(region, name = "number_of_coastal_countries") %>%
+  arrange(desc(number_of_coastal_countries))
+
+region_frequency
+
+region_frequency %>%
+  slice_max(
+    order_by = number_of_coastal_countries,
+    n = 1,
+    with_ties = TRUE
+  )
 
 
 
