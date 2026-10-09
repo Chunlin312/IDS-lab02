@@ -1,6 +1,6 @@
 ---
 title: "Lab 02 - Global plastic waste"
-author: "Chunlin Chen, lexuan Huang, user3, user4"
+author: "Chunlin Chen, lexuan Huang, Yamin Wang, Shihan Zhou"
 date: "`r Sys.Date()`"
 output: html_document
 ---
