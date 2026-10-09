@@ -179,11 +179,32 @@ plastic_data_all %>%
     pct_mismanaged_plastic_ocean
   )
 
+##NaN means “Not a Number”. The result is caused by Somalia, where bot
+#mismanaged plastic variables are zero. Dividing zero by zero produces NaN.
+
+plastic_data_clean <- plastic_data_all %>%
+  drop_na(pct_mismanaged_plastic_ocean)
+
+region_median_clean <- plastic_data_clean %>%
+  group_by(region) %>%
+  summarise(
+    median_pct_ocean = median(pct_mismanaged_plastic_ocean),
+    .groups = "drop"
+  ) %>%
+  arrange(median_pct_ocean)
+
+region_median_clean
+
+region_median_clean %>%
+  slice_min(
+    order_by = median_pct_ocean,
+    n = 1,
+    with_ties = TRUE
+  )
+
 
 
 ```
-NaN means “Not a Number”. The result is caused by Somalia, where both
-mismanaged plastic variables are zero. Dividing zero by zero produces NaN.
 
 ### Ex 4.
 
