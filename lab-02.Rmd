@@ -154,10 +154,36 @@ The region with the lowest mean total mismanaged plastic waste is Oceania.
 ```{r Ex3, message = FALSE}
 # Write your code here to answer exercise 3
 
+plastic_data_all <- plastic_data_all %>%
+  mutate(
+    pct_mismanaged_plastic_ocean =
+      mismanaged_plastic_ocean / mismanaged_plastic * 100
+  )
+
+region_median_pct <- plastic_data_all %>%
+  group_by(region) %>%
+  summarise(
+    median_pct_ocean = median(pct_mismanaged_plastic_ocean),
+    .groups = "drop"
+  )
+
+region_median_pct
+
+plastic_data_all %>%
+  filter(code == "SOM") %>%
+  select(
+    name,
+    code,
+    mismanaged_plastic,
+    mismanaged_plastic_ocean,
+    pct_mismanaged_plastic_ocean
+  )
+
 
 
 ```
-
+NaN means “Not a Number”. The result is caused by Somalia, where both
+mismanaged plastic variables are zero. Dividing zero by zero produces NaN.
 
 ### Ex 4.
 
