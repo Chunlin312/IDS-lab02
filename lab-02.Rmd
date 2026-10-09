@@ -211,6 +211,39 @@ region_median_clean %>%
 ```{r Ex4, message = FALSE}
 # Write your code here to answer exercise 4
 
+plastic_data_all <- plastic_data_all %>%
+  rename(
+    pop = population,
+    mismanaged_pc = mismanaged_plastic,
+    ocean_plastic_pc = mismanaged_plastic_ocean,
+    total_mismanaged = total_mismanage_plastic,
+    pct_ocean = pct_mismanaged_plastic_ocean
+  )
+
+plastic_data_all <- plastic_data_all %>%
+  mutate(
+    region = str_replace_all(
+      region,
+      "Latin America and The Caribbean",
+      "LAC"
+    )
+  )
+
+names(plastic_data_all)
+unique(plastic_data_all$region)
+
+region_summary <- plastic_data_all %>%
+  group_by(region) %>%
+  summarise(
+    countries = n(),
+    mean_mismanaged_pc = mean(mismanaged_pc, na.rm = TRUE),
+    median_pct_ocean = median(pct_ocean, na.rm = TRUE),
+    total_mismanaged_kg = sum(total_mismanaged, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(total_mismanaged_kg))
+
+region_summary
 
 
 ```
