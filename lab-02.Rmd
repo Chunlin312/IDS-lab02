@@ -109,10 +109,45 @@ region_frequency %>%
 ```{r Ex2, message = FALSE}
 # Write your code here to answer exercise 2
 
+# Calculate total mismanaged plastic waste for each country
+plastic_data_all <- plastic_data_all %>%
+  mutate(
+    total_mismanage_plastic = mismanaged_plastic * population
+  )
+
+# Calculate the mean for each region
+region_mean_plastic <- plastic_data_all %>%
+  group_by(region) %>%
+  summarise(
+    mean_total_plastic = mean(
+      total_mismanage_plastic,
+      na.rm = TRUE
+    ),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(mean_total_plastic))
+
+region_mean_plastic
+
+region_mean_plastic %>%
+  slice_max(
+    order_by = mean_total_plastic,
+    n = 1,
+    with_ties = TRUE
+  )
+
+region_mean_plastic %>%
+  slice_min(
+    order_by = mean_total_plastic,
+    n = 1,
+    with_ties = TRUE
+  )
+
 
 
 ```
-
+The region with the highest mean total mismanaged plastic waste is Asia  
+The region with the lowest mean total mismanaged plastic waste is Oceania.
 
 ### Ex 3.
 
